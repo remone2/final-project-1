@@ -1,4 +1,4 @@
-let { src, dest, series } = require("gulp");
+let { src, dest, parallel } = require("gulp");
 let minify = require("gulp-minify");
 let cleanCSS = require("gulp-clean-css");
 
@@ -12,4 +12,4 @@ function stylesTask() {
   return src("src/*.css").pipe(cleanCSS()).pipe(dest("dist"));
 }
 
-exports.default = series(pagesTask, scriptsTask, stylesTask);
+exports.default = parallel(pagesTask, scriptsTask, stylesTask);
