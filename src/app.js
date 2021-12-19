@@ -6,11 +6,46 @@ function getTrip(source) {
   return fetch(source).then((response) => response.json());
 }
 
+function handleFirstErrors() {
+  let firstInput = document.getElementsByClassName("origins")[0];
+  while (firstInput.hasChildNodes()) {
+    firstInput.removeChild(firstInput.firstChild);
+  }
+  firstInput.insertAdjacentHTML(
+    `beforeend`,
+    `<li><div>Error: Please enter a location.</div></li>`
+  );
+}
+function handleSecondErrors() {
+  let secondInput = document.getElementsByClassName("destinations")[0];
+  while (secondInput.hasChildNodes()) {
+    secondInput.removeChild(secondInput.firstChild);
+  }
+  secondInput.insertAdjacentHTML(
+    `beforeend`,
+    `<li><div>Error: Please enter a location.</div></li>`
+  );
+}
+function handleTripErrors(err) {
+  let output = document.getElementsByClassName("my-trip")[0];
+  while (output.hasChildNodes()) {
+    output.removeChild(output.firstChild);
+  }
+  output.insertAdjacentHTML(
+    `beforeend`,
+    `<li><div>Error: Please enter a start location and destination</div></li>`
+  );
+}
+
 function planTrip() {
   let firstInput = document.getElementsByClassName("origins")[0];
   let secondInput = document.getElementsByClassName("destinations")[0];
   let options1Li = firstInput.querySelectorAll("li");
   let options2Li = secondInput.querySelectorAll("li");
+  let lat1 = 0;
+  let lon1 = 0;
+  let lat2 = 0;
+  let lon2 = 0;
   for (option of options1Li) {
     if (option.classList.contains("selected")) {
       lat1 = option.getAttribute("data-lat");
@@ -27,7 +62,7 @@ function planTrip() {
     `https://api.winnipegtransit.com/v3/trip-planner.json?api-key=FYkqe4oC7kGOnfP30xPB&origin=geo/${lat1},${lon1}&destination=geo/${lat2},${lon2}`
   )
     .then((data2) => renderTrip(data2))
-    .catch((err) => console.log(err));
+    .catch((err) => handleTripErrors(err));
 }
 
 function renderTrip(data) {
@@ -81,14 +116,14 @@ function getFirstData(data) {
     `https://api.mapbox.com/geocoding/v5/mapbox.places/${data}.json?bbox=-97.325875,49.766204,-96.953987,49.99275&access_token=pk.eyJ1IjoiZGVmYXVsdHVzZXIiLCJhIjoiY2t4Y2ZzdGRpMW9vMDJ3cnlzNHhtNWZyaiJ9.A23Ri4cSq3C5FY1lTtFb9g`
   )
     .then((data2) => renderOrigin(data2))
-    .catch((err) => console.log(err));
+    .catch((err) => handleFirstErrors(err));
 }
 function getSecondData(data) {
   getGeoLocation(
     `https://api.mapbox.com/geocoding/v5/mapbox.places/${data}.json?bbox=-97.325875,49.766204,-96.953987,49.99275&access_token=pk.eyJ1IjoiZGVmYXVsdHVzZXIiLCJhIjoiY2t4Y2ZzdGRpMW9vMDJ3cnlzNHhtNWZyaiJ9.A23Ri4cSq3C5FY1lTtFb9g`
   )
     .then((data2) => renderDestination(data2))
-    .catch((err) => console.log(err));
+    .catch((err) => handleSecondErrors(err));
 }
 
 function renderOrigin(data) {
