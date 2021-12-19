@@ -130,3 +130,56 @@ function renderTrip(data) {
     output.insertAdjacentHTML("beforeend", `<hr>`);
   });
 }
+
+function selectedOption1(e) {
+  if (e.target.closest("li")) {
+    let firstInput = document.getElementsByClassName("origins")[0];
+    let optionsLi = firstInput.querySelectorAll("li");
+    for (option of optionsLi) {
+      if (option.classList.contains("selected"))
+        option.classList.toggle("selected");
+    }
+    e.target.closest("li").classList.toggle("selected");
+  }
+}
+
+function selectedOption2(e) {
+  if (e.target.closest("li")) {
+    let secondInput = document.getElementsByClassName("destinations")[0];
+    let optionsLi = secondInput.querySelectorAll("li");
+    for (option of optionsLi) {
+      if (option.classList.contains("selected"))
+        option.classList.toggle("selected");
+    }
+    e.target.closest("li").classList.toggle("selected");
+  }
+}
+
+let handleFirstFormSubmit = (e) => {
+  e.preventDefault();
+  let inputString = e.target.firstElementChild.value;
+  getFirstData(inputString);
+};
+
+let handleSecondFormSubmit = (e) => {
+  e.preventDefault();
+  let inputString = e.target.firstElementChild.value;
+  getSecondData(inputString);
+};
+
+document
+  .getElementsByClassName("origin-form")[0]
+  .addEventListener("submit", handleFirstFormSubmit);
+document
+  .getElementsByClassName("destination-form")[0]
+  .addEventListener("submit", handleSecondFormSubmit);
+document
+  .getElementsByClassName("button-container")[0]
+  .addEventListener("click", planTrip);
+
+document
+  .getElementsByClassName("origins")[0]
+  .addEventListener("click", selectedOption1);
+document
+  .getElementsByClassName("destinations")[0]
+  .addEventListener("click", selectedOption2);
