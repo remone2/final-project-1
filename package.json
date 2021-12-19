@@ -289,10 +289,13 @@
     "type": "git",
     "url": "git+https://github.com/remone2/final-project-1.git"
   },
-  "author": "",
+  "author": "Jamodin",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/remone2/final-project-1/issues"
   },
-  "homepage": "https://github.com/remone2/final-project-1#readme"
+  "homepage": "https://github.com/remone2/final-project-1#readme",
+  "keywords": [
+    "final-project"
+  ]
 }
