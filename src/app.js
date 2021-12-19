@@ -21,3 +21,42 @@ function getSecondData(data) {
     .catch((err) => console.log(err));
 }
 
+function renderOrigin(data) {
+  let firstInput = document.getElementsByClassName("origins")[0];
+  while (firstInput.hasChildNodes()) {
+    firstInput.removeChild(firstInput.firstChild);
+  }
+  data.features.forEach((location) => {
+    firstInput.insertAdjacentHTML(
+      `beforeend`,
+      `<li data-long="${location.geometry.coordinates[0]}" data-lat="${
+        location.geometry.coordinates[1]
+      }" class="">
+          <div class="name">${location.text}</div>
+          <div>${
+            !location.properties.address
+              ? location.context[2].text
+              : location.properties.address
+          }</div>
+        </li>
+    `
+    );
+  });
+}
+
+function renderDestination(data) {
+  let secondInput = document.getElementsByClassName("destinations")[0];
+  while (secondInput.hasChildNodes()) {
+    secondInput.removeChild(secondInput.firstChild);
+  }
+  data.features.forEach((location) => {
+    secondInput.insertAdjacentHTML(
+      `beforeend`,
+      `<li data-long="${location.geometry.coordinates[0]}" data-lat="${location.geometry.coordinates[1]}" class="">
+          <div class="name">${location.text}</div>
+          <div>${location.properties.address}</div>
+        </li>
+    `
+    );
+  });
+}
